@@ -32,6 +32,9 @@ pip install -r requirements.txt
 
 Ten projekt jest objęty licencją MIT. Włącz się, wzmacniaj się i ciesz się drogą do swojej najlepszej wersji z MMS!
 
+### Aby dowiedzieć się więcej:
+Aby dowiedzieć się więcej wejdź na stronę: (https://moc-motywacja-sila.com)
+
 ## Autorzy
 - Michał Śnieg
 - Mateusz Okoń
