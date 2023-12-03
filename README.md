@@ -14,7 +14,9 @@ Dzięki narzędziom do śledzenia postępów, możesz monitorować swoje osiągn
 
 MMS skupia się nie tylko na sile fizycznej, ale także na budowaniu siły wewnętrznej poprzez zdrowy styl życia, zbilansowaną dietę i dbałość o równowagę psychiczną.
 
+### Nowoczesne Podjeście do Klienta:
 
+MMS zawiera w sobie wszystko czego potencjalny użytkownik zapragnie.
 
 # ! Aplikacja w produkcji !
 ### Jak Zacząć :
