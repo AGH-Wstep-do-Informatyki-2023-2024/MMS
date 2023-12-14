@@ -101,8 +101,7 @@
 
 <Content>:
 
-<HomeWindow>:
-    name: 'home'
+<MainWindow>:
     layout: layout
     canvas.before:
         Color:
@@ -115,18 +114,6 @@
         id: layout
         size: root.size
         orientation: 'vertical'
+        TopBar:
+        Content:
 
-<TrainWindow>:
-    name: 'train'
-    layout: layout
-    canvas.before:
-        Color:
-            rgb: hex('#000022')
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
-    BoxLayout:
-        id: layout
-        size: root.size
-        orientation: 'vertical'

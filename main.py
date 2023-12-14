@@ -7,26 +7,29 @@ from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.widget import Widget
 
-class HomeWindow(Screen):
+class MainWindow(Screen):
+    def __init__(self, **kwargs):
+        super(MainWindow, self).__init__(**kwargs)
+
+class HomeWindow(MainWindow):
     def __init__(self, **kwargs):
         super(HomeWindow, self).__init__(**kwargs)
-        # self.layout.add_widget(NavBar())
+
+class TrainWindow(MainWindow):
+    def __init__(self, **kwargs):
+        super(TrainWindow, self).__init__(**kwargs)
+
+class DietWindow(MainWindow):
+    def __init__(self, **kwargs):
+        super(DietWindow, self).__init__(**kwargs)
+
+class StatsWindow(MainWindow):
+    def __init__(self, **kwargs):
+        super(StatsWindow, self).__init__(**kwargs)
 
 class ProfileWindow(Screen):
     def __init__(self, **kwargs):
         super(ProfileWindow, self).__init__(**kwargs)
-
-class TrainWindow(Screen):
-    def __init__(self, **kwargs):
-        super(TrainWindow, self).__init__(**kwargs)
-
-class NutritionWindow(Screen):
-    def __init__(self, **kwargs):
-        super(NutritionWindow, self).__init__(**kwargs)
-
-class StatsWindow(Screen):
-    def __init__(self, **kwargs):
-        super(StatsWindow, self).__init__(**kwargs)
 
 class NavBar(Widget):
     def __init__(self, manager, current, **kwargs):
@@ -99,14 +102,12 @@ if __name__ == '__main__':
 
     home_window = HomeWindow(name='home')
     train_window = TrainWindow(name='train')
-    diet_window = NutritionWindow(name='diet')
+    diet_window = DietWindow(name='diet')
     stats_window = StatsWindow(name='stats')
 
     main_screens = [home_window, train_window, diet_window, stats_window]
     for screen in main_screens:
-        screen.add_widget(TopBar())
-        screen.add_widget(Content())
-        screen.add_widget(NavBar(manager=manager, current=screen))
+        screen.layout.add_widget(NavBar(manager=manager, current=screen))
         manager.add_widget(screen)
 
     manager.current = 'home'
