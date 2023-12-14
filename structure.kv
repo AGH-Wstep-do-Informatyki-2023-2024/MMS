@@ -1,0 +1,132 @@
+#:kivy 2.2.1
+#:import hex kivy.utils.get_color_from_hex
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+<WindowManager>:
+    transition: FadeTransition(duration=0.05)
+
+<NavButton>:
+    button: button
+    AnchorLayout:
+        size: root.size
+        pos: root.pos
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Button:
+            id: button
+            size_hint: 0.73, 0.65
+            background_color: 1, 1, 1, 1
+            canvas.before:
+                Color:
+                    rgb: hex('#1E1E1E')
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10,]
+            on_press: app.root.current = root.window
+
+<ProfileIcon>:
+    size_hint: 0.4, 1
+    AnchorLayout:
+        size: root.size
+        pos: root.pos
+        anchor_x: 'center'
+        anchor_y: 'center'
+        Button:
+            canvas.before:
+                Color:
+                    rgb: hex('#E1E1E1')
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [90,]
+            size_hint: 0.7, 0.7
+            background_normal: './img/user.png'
+            background_down: './img/user.png'
+
+<NotificationBell>:
+    size_hint: 0.4, 1
+    AnchorLayout:
+        size: root.size
+        pos: root.pos
+        anchor_x: 'right'
+        anchor_y: 'center'
+        Button:
+            size_hint: 0.6, 0.6
+            background_normal: './img/bell-white.png'
+            background_down: './img/bell-white.png'
+
+
+<TopBar>:
+    size_hint: 1, 0.13
+
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: 'horizontal'
+        Label:
+            text: 'MMS'
+            bold: True
+            font_size: '55sp'
+        NotificationBell:
+        ProfileIcon:
+
+<Separator>:
+    size_hint: 1, 0.03
+    canvas.before:
+        Color:
+            rgb: hex('#E1E1E1')
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [3,]
+
+<NavBar>:
+    layout: layout
+    size_hint: 1.0, 0.15
+    canvas.before:
+        Color:
+            rgb: hex('#19191C')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size: root.size
+        orientation: 'vertical'
+        Separator:
+        BoxLayout:
+            id: layout
+            size: root.size
+            orientation: 'horizontal'
+
+<Content>:
+
+<HomeWindow>:
+    name: 'home'
+    layout: layout
+    canvas.before:
+        Color:
+            rgb: hex('#19191C')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        id: layout
+        size: root.size
+        orientation: 'vertical'
+
+<TrainWindow>:
+    name: 'train'
+    layout: layout
+    canvas.before:
+        Color:
+            rgb: hex('#000022')
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        id: layout
+        size: root.size
+        orientation: 'vertical'
