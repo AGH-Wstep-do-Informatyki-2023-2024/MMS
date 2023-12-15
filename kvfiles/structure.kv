@@ -23,7 +23,8 @@
                     pos: self.pos
                     size: self.size
                     radius: [10,]
-            on_press: app.root.current = root.window
+            # on_press: app.root.current = root.window
+            on_press: root.change_window()
 
 <ProfileIcon>:
     size_hint: 0.4, 1
@@ -99,10 +100,9 @@
             size: root.size
             orientation: 'horizontal'
 
-<Content>:
-
 <MainWindow>:
     layout: layout
+    content: content
     canvas.before:
         Color:
             rgb: hex('#19191C')
@@ -113,7 +113,15 @@
     BoxLayout:
         id: layout
         size: root.size
+        pos: root.pos
         orientation: 'vertical'
         TopBar:
-        Content:
+        ScrollView:
+            id: content
+            do_scroll_y: True
+            do_scroll_x: False
+            bar_color: 0, 0, 0, 0
+            bar_inactive_color: 0, 0, 0, 0
+            effect_cls: 'ScrollEffect'
+
 

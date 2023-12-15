@@ -2,34 +2,18 @@ import kivy
 import kivy_config
 
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.widget import Widget
 
-class MainWindow(Screen):
-    def __init__(self, **kwargs):
-        super(MainWindow, self).__init__(**kwargs)
+from os import listdir
 
-class HomeWindow(MainWindow):
-    def __init__(self, **kwargs):
-        super(HomeWindow, self).__init__(**kwargs)
+from pyfiles.home import *
+from pyfiles.train import *
+from pyfiles.diet import *
+from pyfiles.stats import *
+from pyfiles.profile import *
 
-class TrainWindow(MainWindow):
-    def __init__(self, **kwargs):
-        super(TrainWindow, self).__init__(**kwargs)
-
-class DietWindow(MainWindow):
-    def __init__(self, **kwargs):
-        super(DietWindow, self).__init__(**kwargs)
-
-class StatsWindow(MainWindow):
-    def __init__(self, **kwargs):
-        super(StatsWindow, self).__init__(**kwargs)
-
-class ProfileWindow(Screen):
-    def __init__(self, **kwargs):
-        super(ProfileWindow, self).__init__(**kwargs)
 
 class NavBar(Widget):
     def __init__(self, manager, current, **kwargs):
@@ -52,21 +36,26 @@ class NavBar(Widget):
             case _:
                 pass
 
-        home_button = NavButton('home', home_image)
-        train_button = NavButton('train', train_image)
-        diet_button = NavButton('diet', diet_image)
-        stats_button = NavButton('stats', stats_image)
+        home_button = NavButton(manager, 'home', home_image)
+        train_button = NavButton(manager, 'train', train_image)
+        diet_button = NavButton(manager, 'diet', diet_image)
+        stats_button = NavButton(manager, 'stats', stats_image)
 
         self.buttons = [home_button, train_button, diet_button, stats_button]
         for button in self.buttons:
             self.layout.add_widget(button)
 
 class NavButton(Widget):
-    def __init__(self, window, img, **kwargs):
+    def __init__(self, manager, window, img, **kwargs):
         super(NavButton, self).__init__(**kwargs)
         self.window = window
+        self.manager = manager
         self.button.background_normal = img
         self.button.background_down = img
+    
+    def change_window(self):
+        self.manager.current = self.window
+        
 
 class Separator(Widget):
     pass
@@ -97,10 +86,15 @@ class MainApp(App):
         return self.manager
 
 if __name__ == '__main__':
-    kv = Builder.load_file('structure.kv')
+    KV_PATH = './kvfiles/'
+    for file in listdir(KV_PATH):
+        Builder.load_file(KV_PATH + file)
+
     manager = WindowManager()
 
     home_window = HomeWindow(name='home')
+    home_window.content.add_widget(HomeContent())
+
     train_window = TrainWindow(name='train')
     diet_window = DietWindow(name='diet')
     stats_window = StatsWindow(name='stats')
