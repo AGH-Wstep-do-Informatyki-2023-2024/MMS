@@ -14,7 +14,9 @@ Dzięki narzędziom do śledzenia postępów, możesz monitorować swoje osiągn
 
 MMS skupia się nie tylko na sile fizycznej, ale także na budowaniu siły wewnętrznej poprzez zdrowy styl życia, zbilansowaną dietę i dbałość o równowagę psychiczną.
 
+### Nowoczesne Podjeście do Klienta:
 
+MMS zawiera w sobie wszystko czego potencjalny użytkownik zapragnie.
 
 # ! Aplikacja w produkcji !
 ### Jak Zacząć :
@@ -29,6 +31,9 @@ pip install -r requirements.txt
 ## Licencja:
 
 Ten projekt jest objęty licencją MIT. Włącz się, wzmacniaj się i ciesz się drogą do swojej najlepszej wersji z MMS!
+
+### Aby dowiedzieć się więcej:
+Aby dowiedzieć się więcej wejdź na stronę: (https://moc-motywacja-sila.com)
 
 ## Autorzy
 - Michał Śnieg
