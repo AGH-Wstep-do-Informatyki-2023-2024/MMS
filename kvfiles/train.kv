@@ -1,1 +1,70 @@
 #:kivy 2.2.1
+#:import hex kivy.utils.get_color_from_hex
+
+<TrainLabel>:
+    iconlabel: icon
+    namelabel: name
+    height: 200
+
+    canvas.before:
+        Color:
+            rgb: hex('#1E1E1E')
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,]
+    BoxLayout:
+        orientation: 'horizontal'
+        size: root.size
+        pos: root.pos
+        Image:
+            id: icon
+            size_hint: 0.4, 1
+            padding: 40
+        Label:
+            id: name
+            text_size: self.size
+            font_size: '40sp'
+            halign: 'left'
+            valign: 'middle'
+    
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        size: root.size
+        pos: root.pos
+        Button:
+            size: self.size
+            pos: self.pos
+            background_color: 0, 0, 0, 0
+            on_press: root.show_description()
+
+
+<TrainTop>:
+    button: button
+    size: self.size
+    orientation: 'horizontal'
+    Label:
+        text: 'Twoje treningi:'
+        text_size: self.size
+        font_size: '45sp'
+        halign: 'left'
+        valign: 'middle'
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        size_hint: 0.42, 1
+        padding: 25
+        Button:
+            id: button
+            background_color: 1, 1, 1, 1
+            background_normal: './img/plus-white.png'
+            background_down: './img/plus-white.png'
+
+
+<TrainContent>:
+    cols: 1
+    size_hint_y: None
+    spacing: 0, 30
+    padding: 25, 50
+    

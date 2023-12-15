@@ -1,8 +1,5 @@
 from pyfiles.mainwindow import MainWindow
-# from kivy.uix.scrollview import ScrollView
-from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
 from kivy.uix.button import Button
 
 class HomeWindow(MainWindow):
@@ -16,11 +13,11 @@ class HomeContent(GridLayout):
         self.height = self.minimum_height
 
         for i in range(10):
-            label = Label(text=f'{i}', height=200)
-            btn = Button(text=f'{i}')
-            self.add_widget(label)
-            self.add_widget(btn)
+            btn1 = Button(text=f'{i}', background_color=(0, 0, 1, 1), height=200)
+            btn2 = Button(text=f'{i}', background_color=(0, 1, 0, 1), height=200)
+            self.add_widget(btn1)
+            self.add_widget(btn2)
             self.num_of_elements += 2
         
-            self.height += label.height
-            self.height += btn.height
+            self.height += btn1.height
+            self.height += btn2.height

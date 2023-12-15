@@ -96,8 +96,13 @@ if __name__ == '__main__':
     home_window.content.add_widget(HomeContent())
 
     train_window = TrainWindow(name='train')
+    train_window.content.add_widget(TrainContent())
+
     diet_window = DietWindow(name='diet')
+    diet_window.content.add_widget(DietContent())
+
     stats_window = StatsWindow(name='stats')
+    stats_window.content.add_widget(StatsContent())
 
     main_screens = [home_window, train_window, diet_window, stats_window]
     for screen in main_screens:

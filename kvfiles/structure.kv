@@ -1,9 +1,9 @@
 #:kivy 2.2.1
 #:import hex kivy.utils.get_color_from_hex
-#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
 
 <WindowManager>:
-    transition: FadeTransition(duration=0.05)
+    transition: NoTransition()
 
 <NavButton>:
     button: button
@@ -23,7 +23,6 @@
                     pos: self.pos
                     size: self.size
                     radius: [10,]
-            # on_press: app.root.current = root.window
             on_press: root.change_window()
 
 <ProfileIcon>:
@@ -65,10 +64,17 @@
         size: root.size
         pos: root.pos
         orientation: 'horizontal'
-        Label:
-            text: 'MMS'
-            bold: True
-            font_size: '55sp'
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            padding: 30
+            Label:
+                text: 'MMS'
+                bold: True
+                font_size: '55sp'
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
         NotificationBell:
         ProfileIcon:
 
