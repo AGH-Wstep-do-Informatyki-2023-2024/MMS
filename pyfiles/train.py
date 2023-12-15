@@ -1,10 +1,8 @@
 from pyfiles.mainwindow import MainWindow
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.widget import Widget
-from kivy.uix.behaviors import ButtonBehavior
 
 storage = JsonStore('trainings.json')
 IMG_PATH = './img/'
