@@ -92,6 +92,7 @@ if __name__ == '__main__':
 
     manager = WindowManager()
 
+    # pages 
     home_window = HomeWindow(name='home')
     home_window.content.add_widget(HomeContent())
 
