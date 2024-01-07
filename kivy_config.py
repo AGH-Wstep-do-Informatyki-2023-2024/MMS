@@ -8,5 +8,5 @@ if __name__ != '__main__':
     # Config.set('graphics', 'height', '2340')
     Config.set('graphics', 'width', '540')
     Config.set('graphics', 'height', '1140')
-
+    #zmiana
     #test
