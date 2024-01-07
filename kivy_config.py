@@ -10,3 +10,5 @@ if __name__ != '__main__':
     Config.set('graphics', 'height', '1140')
     #zmiana
     #test
+
+    # asdfafdaf
