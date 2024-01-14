@@ -1,1 +1,77 @@
 #:kivy 2.2.1
+
+<DietContent>:
+    cols: 1  
+
+<Calc>:
+    Label:
+        text: "Kalkulator zera kalorycznego"
+        text_size: self.size
+        font_size: '30sp'
+        halign: 'center'
+        valign: 'top'
+        size_hint_y: None
+
+    TextInput:
+        id: mass_input
+        multiline: False
+        size_hint_y: None
+        height: 60
+        width: 200
+        hint_text: "Masa ciała (kg)"
+       
+
+    TextInput:
+        id: height_input
+        multiline: False
+        size_hint_y: None
+        height: 60
+        width: 200
+        hint_text: "Wzrost (cm)"
+        
+
+    TextInput:
+        id: age_input
+        multiline: False
+        size_hint_y: None
+        height: 60
+        width: 200
+        hint_text: "Wiek"
+        
+    TextInput:
+        id: pal_input
+        multiline: False
+        size_hint_y: None
+        height: 60
+        width: 200
+        hint_text: "Podaj swój współczynnik aktywności"
+        pos_hint: {"center_x": 0.5}
+
+    Spinner:
+        id: gender_spinner
+        text: "Wybierz płeć"
+        values: ["Mężczyzna", "Kobieta"]
+        size_hint: None, None
+        height: 60
+        width: 200
+        pos_hint: {"center_x": 0.5}
+       
+    Button:
+        text: "Oblicz"
+        size_hint: None, None
+        height: 25
+        width: 100  
+        on_press: root.calculate_calories()
+
+
+    Label:
+        text: 
+            "Mała pomoc: \n" \
+            "Brak aktywności fizycznej - 1.2\n" \
+            "Lekka aktywność (aktywność - ok. 140 minut tygodniowo) - 1.4\n" \
+            "Średnia aktywność (aktywność - ok. 280 minut tygodniowo) - 1.6\n" \
+            "Wysoka aktywność (aktywność - ok. 420 minut tygodniowo) - 1.8\n" \
+            "B. wysoka aktywność fizyczna (aktywność - ok. 560 minut tygodniowo) - 2"
+        halign: 'left'
+        valign: 'bottom'
+        
