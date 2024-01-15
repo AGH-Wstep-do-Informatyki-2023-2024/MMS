@@ -41,6 +41,7 @@
 
 
 <TrainTop>:
+    id: train_top
     button: button
     size: self.size
     orientation: 'horizontal'
@@ -60,6 +61,7 @@
             background_color: 1, 1, 1, 1
             background_normal: './img/plus-white.png'
             background_down: './img/plus-white.png'
+            on_release: root.new_training()
 
 
 <TrainContent>:
@@ -67,4 +69,131 @@
     size_hint_y: None
     spacing: 0, 30
     padding: 25, 50
+
+<BackButton>:
+    size: 25, 25
+    size_hint: 0.18, 1
+    pos: self.pos
+    background_color: 1, 1, 1, 1
+    background_normal: './img/caret-left-white.png'
+    background_down: './img/caret-left-white.png'
+    on_release: self.go_back()
+
+<TopBackButton>:
+    layout: layout
+    size: root.size
+    pos: root.pos
+    # size_hint: 1, 0.1
+
+    AnchorLayout:
+        id: layout
+        pos: root.pos
+        size: root.size
+        anchor_x: 'left'
+        anchor_y: 'center'
+        padding: 8
+
+
+<DarkTextInput>:
+    size: self.size
+    pos: self.pos
+    background_color: hex('#1E1E1E')
+    background_normal: './img/white.png'
+    background_active: './img/white.png'
+    foreground_color: 1, 1, 1, 1
+    disabled_foreground_color: hex('#FFFFFFF')
+    cursor_color: hex('#FFFFFF')
+    border: 0, 0, 0, 0
+    font_size: '35sp'
+    hint_text_color: hex('#777777')
+
+
+<NewTrainingContent>:
+    tbb: tbb
+    cols: 1
+    size: root.size
+    pos: root.pos
+    spacing: 30
+    padding: 20
+
+    TopBackButton:
+        id: tbb
+        size_hint: 1, 0.08
     
+    Label:
+        text: 'NOWY TRENING'
+        font_size: '60sp'
+        size_hint: 1, 0.13
+
+    DarkTextInput:
+        id: name
+        size_hint: 1, 0.1
+        hint_text: 'nazwa'
+
+    DarkTextInput:
+        id: description
+        size_hint: 1, 0.4
+        hint_text: 'opis'
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 0.2
+
+        canvas.before:
+            Color:
+                rgba: hex('#1E1E1E')
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [10,]
+        
+        Label:
+            text: 'Ikona'
+            size_hint: 1, 0.2
+            font_size: '30sp'
+            color: hex('#777777')
+        BoxLayout:
+            id: icons
+            orientation: 'horizontal'
+            # size_hint: 1, 0.2
+            padding: 15
+            spacing: 10
+            Button:
+                text: 'A'
+            Button:
+                text: 'B'
+            Button:
+                text: 'C'
+    AnchorLayout:
+        id: layout_next
+        pos: self.pos
+        size: self.size
+        size_hint: 1, 0.08
+        anchor_x: 'right'
+        anchor_y: 'center'
+        padding: 8
+        Button:
+            size: 20, 20
+            size_hint: 0.18, 1
+            pos: self.pos
+            background_color: 1, 1, 1, 1
+            background_normal: './img/caret-double-right-white.png'
+            background_down: './img/caret-double-right-white.png'
+            canvas.before:
+                Color:
+                    rgb: hex('#1E1E1E')
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10,]
+
+
+
+
+<NewTrainingFirst>:
+    canvas.before:
+        Color:
+            rgba: hex('#19191C')
+        Rectangle:
+            size: self.size
+            pos: self.pos
