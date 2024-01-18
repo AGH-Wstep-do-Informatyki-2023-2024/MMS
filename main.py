@@ -26,8 +26,6 @@ class NavBar(Widget):
         diet_image = './img/carrot-gray.png'
         stats_image = './img/chart-bar-gray.png'
 
-        # print(self.ids)
-
         match current.name:
             case 'home':
                 home_image = './img/house-white.png'

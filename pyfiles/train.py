@@ -13,6 +13,9 @@ from pyfiles.windowmanager import manager
 storage = JsonStore('trainings.json')
 IMG_PATH = './img/'
 
+nt_first = None
+nt_second = None
+
 class TrainLabel(Widget):
     def __init__(self, id, **kwargs):
         super(TrainLabel, self).__init__(**kwargs)
@@ -29,11 +32,6 @@ class TrainLabel(Widget):
 class TopBackButton(Widget):
     def __init__(self, **kwargs):
         super(TopBackButton, self).__init__(**kwargs)
-        # self.previous = previous
-
-    # def go_back(self):
-    #     global manager
-    #     manager.current = self.previous
 
 class BackButton(Button):
     def __init__(self, previous, **kwargs):
@@ -44,42 +42,84 @@ class BackButton(Button):
         global manager
         manager.current = self.previous
 
+        if self.previous == 'train':
+            global nt_first
+            nt_first.reset_first()
 
-class NewTrainingContent(GridLayout):
+
+class NewTrainingSecondContent(GridLayout):
     def __init__(self, **kwargs):
-        super(NewTrainingContent, self).__init__(**kwargs)
+        super(NewTrainingSecondContent, self).__init__(**kwargs)
+
+
+class NewTrainingFirstContent(GridLayout):
+    def __init__(self, **kwargs):
+        super(NewTrainingFirstContent, self).__init__(**kwargs)
 
         self.tbb.layout.add_widget(BackButton('train'))
-        # self.reset()
+        self.change_icon(None)
 
-    # def reset(self):
-    #     self.clear_widgets()
-    #     self.add_widget(TopBackButton('train'))
-    #     self.add_widget(Label(text='no co tam halo'))
-    #     print('reset 1')
+    def change_icon(self, icon):
+        self.icons.clear_widgets()
+
+        barbell = IMG_PATH + 'barbell-gray.png'
+        runner = IMG_PATH + 'person-simple-run-gray.png'
+        bike = IMG_PATH + 'person-simple-bike-gray.png'
+
+        match icon:
+            case 'barbell':
+                barbell = IMG_PATH + 'barbell-white.png'
+            case 'runner':
+                runner = IMG_PATH + 'person-simple-run-white.png'
+            case 'bike':
+                bike = IMG_PATH + 'person-simple-bike-white.png'
+            case _:
+                pass
+
+        self.icons.add_widget(IconButton(
+            content=self,
+            icon='barbell',
+            background_normal=barbell,
+            background_down=barbell,
+        ))
+
+        self.icons.add_widget(IconButton(
+            content=self,
+            icon='runner',
+            background_normal=runner,
+            background_down=runner,
+        ))
+
+        self.icons.add_widget(IconButton(
+            content=self,
+            icon='bike',
+            background_normal=bike,
+            background_down=bike,
+        ))
+
+class IconButton(Button):
+    def __init__(self, content, icon, **kwargs):
+        super(IconButton, self).__init__(**kwargs)
+        
+        self.icon = icon
+        self.content = content
+
+    def change(self):
+        self.content.change_icon(self.icon)
 
 class NewTrainingFirst(Screen):
     def __init__(self, **kwargs):
         super(NewTrainingFirst, self).__init__(**kwargs)
-        # self.content = NewTrainingContent()
-
         self.reset_first()
 
-        # self.add_widget(self.content)
-
     def reset_first(self):
-        self.content = NewTrainingContent()
+        self.content = NewTrainingFirstContent()
         self.add_widget(self.content)
-        # self.content.clear_widgets()
-        # self.content.add_widget(TopBackButton('train'))
-        # self.content.add_widget(Label(text='no co tam halo'))
-        # self.content.add_widget()
 
 
 class NewTrainingSecond(Screen):
     def __init__(self, **kwargs):
         super(NewTrainingSecond, self).__init__(**kwargs)
-        # self.reset()
 
     def reset(self):
         self.clear_widgets()
@@ -97,11 +137,11 @@ class TrainWindow(MainWindow):
 
         global manager
 
+        global nt_first
         nt_first = NewTrainingFirst(name='train_new_training_first')
-        # nt_first.content = NewTrainingContent()
+        
+        global nt_second
         nt_second = NewTrainingSecond(name='train_new_training_second')
-        # nt_second.content = NewTrainingContent()
-
 
         manager.add_widget(nt_first)
         manager.add_widget(nt_second)

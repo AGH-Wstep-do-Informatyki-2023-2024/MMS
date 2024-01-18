@@ -107,8 +107,13 @@
     font_size: '35sp'
     hint_text_color: hex('#777777')
 
+<IconButton>:
+    pos: self.pos
+    background_color: 1, 1, 1, 1
+    on_release: self.change()
 
-<NewTrainingContent>:
+<NewTrainingFirstContent>:
+    icons: icons
     tbb: tbb
     cols: 1
     size: root.size
@@ -149,21 +154,15 @@
         
         Label:
             text: 'Ikona'
-            size_hint: 1, 0.2
+            size_hint: 1, 0.25
             font_size: '30sp'
+            text_size: self.size
             color: hex('#777777')
         BoxLayout:
             id: icons
             orientation: 'horizontal'
-            # size_hint: 1, 0.2
-            padding: 15
-            spacing: 10
-            Button:
-                text: 'A'
-            Button:
-                text: 'B'
-            Button:
-                text: 'C'
+            padding: 25
+            spacing: 15
     AnchorLayout:
         id: layout_next
         pos: self.pos
@@ -186,9 +185,6 @@
                     pos: self.pos
                     size: self.size
                     radius: [10,]
-
-
-
 
 <NewTrainingFirst>:
     canvas.before:
