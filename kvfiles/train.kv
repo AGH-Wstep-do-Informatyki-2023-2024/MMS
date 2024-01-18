@@ -83,7 +83,6 @@
     layout: layout
     size: root.size
     pos: root.pos
-    # size_hint: 1, 0.1
 
     AnchorLayout:
         id: layout
@@ -115,6 +114,9 @@
 <NewTrainingFirstContent>:
     icons: icons
     tbb: tbb
+    name: name
+    description: description
+
     cols: 1
     size: root.size
     pos: root.pos
@@ -130,10 +132,15 @@
         font_size: '60sp'
         size_hint: 1, 0.13
 
-    DarkTextInput:
-        id: name
+    BoxLayout:
         size_hint: 1, 0.1
-        hint_text: 'nazwa'
+        orientation: 'vertical'
+        DarkTextInput:
+            id: name
+            size_hint: 1, 0.95
+            hint_text: 'nazwa'
+        Separator:
+            size_hint: 1, 0.05
 
     DarkTextInput:
         id: description
@@ -178,6 +185,7 @@
             background_color: 1, 1, 1, 1
             background_normal: './img/caret-double-right-white.png'
             background_down: './img/caret-double-right-white.png'
+            on_release: root.go_next('train_new_training_second')
             canvas.before:
                 Color:
                     rgb: hex('#1E1E1E')
@@ -186,6 +194,194 @@
                     size: self.size
                     radius: [10,]
 
+<NewExerciseLabel@BoxLayout>:
+    img: img
+    label: label
+
+    orientation: 'horizontal'
+    height: 150
+    canvas.before:
+        Color:
+            rgb: hex('#1E1E1E')
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [70,]
+
+    Image:
+        id: img
+        # source: './img/barbell-white.png'
+        size: self.texture_size
+        size_hint: 0.3, 1
+        text_size: self.size
+    Label:
+        id: label
+        # text: 'Cwiczenie 1'
+        font_size: '50sp'
+        size_hint: 0.7, 1
+
+<NewExerciseWindow>:
+    canvas.before:
+        Color:
+            rgba: hex('#19191C')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
+<NewExerciseContent@GridLayout>:
+    tbb: tbb
+    ex_name: ex_name
+    ex_description: ex_description
+
+    cols: 1
+    size: root.size
+    pos: root.pos
+    spacing: 30
+    padding: 20
+
+    TopBackButton:
+        id: tbb
+        size_hint: 1, 0.08
+    
+    Label:
+        text: 'NOWE ĆWICZENIE'
+        font_size: '55sp'
+        size_hint: 1, 0.13
+
+    BoxLayout:
+        size_hint: 1, 0.1
+        orientation: 'vertical'
+        DarkTextInput:
+            id: ex_name
+            size_hint: 1, 0.95
+            hint_text: 'nazwa ćwiczenia'
+        Separator:
+            size_hint: 1, 0.05
+
+    DarkTextInput:
+        id: ex_description
+        size_hint: 1, 0.4
+        hint_text: 'opis ćwiczenia'
+    AnchorLayout:
+        id: layout_next
+        pos: self.pos
+        size: self.size
+        size_hint: 1, 0.08
+        anchor_x: 'right'
+        anchor_y: 'center'
+        padding: 8
+        Button:
+            size: 20, 20
+            size_hint: 0.18, 1
+            pos: self.pos
+            background_color: 1, 1, 1, 1
+            background_normal: './img/check-white.png'
+            background_down: './img/check-white.png'
+            on_release: root.add_exercise()
+            canvas.before:
+                Color:
+                    rgb: hex('#1E1E1E')
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10,]
+
+
+<AddExercise@Button>:
+    canvas.before:
+        Color:
+            rgb: hex('#1E1E1E')
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [90,]
+
+<NewExerciseMenu@BoxLayout>:
+    orientation: 'horizontal'
+    padding: 60, 8, 60, 8
+    spacing: 60
+    height: 200
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        padding: 10
+        AddExercise:
+            size: 30, 30
+            background_color: 1, 1, 1, 1
+            background_normal: './img/plus-white.png'
+            background_down: './img/plus-white.png'
+            on_release: self.add_exercise()
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        padding: 10
+        AddExercise:
+            size: 30, 30
+            background_color: 1, 1, 1, 1
+            background_normal: './img/clock-white.png'
+            background_down: './img/clock-white.png'
+            on_release: self.add_timer()
+    
+<NewTrainingSecondContent>:
+    tbb: tbb
+    content_layout: content_layout
+    name_label: name_label
+
+    cols: 1
+    size: root.size
+    pos: root.pos
+    spacing: 0, 20
+    padding: 30, 30
+
+    TopBackButton:
+        id: tbb
+        size_hint: 1, 0.08
+    
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 1, 0.08
+        Label:
+            id: name_label
+            text: 'nazwa'
+            font_size: '60sp'
+        Separator:
+    ScrollView:
+        do_scroll_y: True
+        do_scroll_x: False
+        bar_color: 0, 0, 0, 0
+        bar_inactive_color: 0, 0, 0, 0
+        effect_cls: 'ScrollEffect'
+        size_hint: 1, 0.76
+        GridLayout:
+            id: content_layout
+            cols: 1
+            size_hint_y: None
+            spacing: 40
+
+    AnchorLayout:
+        id: layout_next
+        pos: self.pos
+        size: self.size
+        size_hint: 1, 0.08
+        anchor_x: 'right'
+        anchor_y: 'center'
+        padding: 8
+        Button:
+            size: 20, 20
+            size_hint: 0.18, 1
+            pos: self.pos
+            background_color: 1, 1, 1, 1
+            background_normal: './img/check-white.png'
+            background_down: './img/check-white.png'
+            canvas.before:
+                Color:
+                    rgb: hex('#1E1E1E')
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [50,]
+
 <NewTrainingFirst>:
     canvas.before:
         Color:
@@ -193,3 +389,21 @@
         Rectangle:
             size: self.size
             pos: self.pos
+
+<NewTrainingSecond>:
+    canvas.before:
+        Color:
+            rgba: hex('#19191C')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<Separator>:
+    size_hint: 1, 0.03
+    canvas.before:
+        Color:
+            rgb: hex('#E1E1E1')
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [3,]
