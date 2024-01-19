@@ -5,73 +5,105 @@
 
 <Calc>:
     Label:
-        text: "Kalkulator zera kalorycznego"
+        text: "[b]Kalkulator zera kalorycznego[/b]"
         text_size: self.size
+        markup: True
         font_size: '30sp'
         halign: 'center'
         valign: 'top'
         size_hint_y: None
+        height: 60
+        pos_hint: {'center_y': 0.9}
 
-    TextInput:
-        id: mass_input
-        multiline: False
+    Widget:
         size_hint_y: None
-        height: 60
-        width: 200
-        hint_text: "Masa ciała (kg)"
-       
+        height: 20
 
-    TextInput:
-        id: height_input
-        multiline: False
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
         size_hint_y: None
-        height: 60
-        width: 200
-        hint_text: "Wzrost (cm)"
-        
+        height: 400
+        pos_hint: {'center_y': 0.6}
 
-    TextInput:
-        id: age_input
-        multiline: False
-        size_hint_y: None
-        height: 60
-        width: 200
-        hint_text: "Wiek"
-        
-    TextInput:
-        id: pal_input
-        multiline: False
-        size_hint_y: None
-        height: 60
-        width: 200
-        hint_text: "Podaj swój współczynnik aktywności"
-        pos_hint: {"center_x": 0.5}
+        TextInput:
+            id: mass_input
+            multiline: False
+            size_hint: None, None
+            height: 60
+            width: 500
+            hint_text: "Masa ciała (kg)"
+            pos_hint: {'center_x': 0.5}
 
-    Spinner:
-        id: gender_spinner
-        text: "Wybierz płeć"
-        values: ["Mężczyzna", "Kobieta"]
-        size_hint: None, None
-        height: 60
-        width: 200
-        pos_hint: {"center_x": 0.5}
-       
-    Button:
-        text: "Oblicz"
-        size_hint: None, None
-        height: 25
-        width: 100  
-        on_press: root.calculate_calories()
+        TextInput:
+            id: height_input
+            multiline: False
+            size_hint: None, None
+            height: 60
+            width: 500
+            hint_text: "Wzrost (cm)"
+            pos_hint: {'center_x': 0.5}
 
+        TextInput:
+            id: age_input
+            multiline: False
+            size_hint: None, None
+            height: 60
+            width: 500
+            hint_text: "Wiek"
+            pos_hint: {'center_x': 0.5}
 
-    Label:
-        text: 
-            "Mała pomoc: \n" \
-            "Brak aktywności fizycznej - 1.2\n" \
-            "Lekka aktywność (aktywność - ok. 140 minut tygodniowo) - 1.4\n" \
-            "Średnia aktywność (aktywność - ok. 280 minut tygodniowo) - 1.6\n" \
-            "Wysoka aktywność (aktywność - ok. 420 minut tygodniowo) - 1.8\n" \
-            "B. wysoka aktywność fizyczna (aktywność - ok. 560 minut tygodniowo) - 2"
-        halign: 'left'
-        valign: 'bottom'
-        
+        TextInput:
+            id: pal_input
+            multiline: False
+            size_hint: None, None
+            height: 60
+            width: 500
+            hint_text: "Podaj swój współczynnik aktywności"
+            pos_hint: {'center_x': 0.5}
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 10
+            size_hint_y: None
+            height: 60
+            pos_hint: {'center_x': 0.5}
+
+            Widget:  
+                size_hint_x: None
+                width: 15
+
+            Spinner:
+                id: gender_spinner
+                text: "Płeć"
+                values: ["Mężczyzna", "Kobieta"]
+                size_hint: None, None
+                height: 40
+                width: 150
+
+            Widget:  
+                size_hint_x: None
+                width: 170
+
+            Button:
+                text: "Oblicz"
+                size_hint: None, None
+                height: 40
+                width: 150
+                on_press: root.calculate_calories()
+
+        Widget:
+            size_hint_y: None
+            height: 65
+
+        Label:
+            text: 
+                "Mała pomoc:\n" \
+                "Brak aktywności fizycznej - 1.2\n" \
+                "Lekka aktywność (aktywność - ok. 140 minut tygodniowo) - 1.4\n" \
+                "Średnia aktywność (aktywność - ok. 280 minut tygodniowo) - 1.6\n" \
+                "Wysoka aktywność (aktywność - ok. 420 minut tygodniowo) - 1.8\n" \
+                "B. wysoka aktywność fizyczna (aktywność - ok. 560 minut tygodniowo) - 2" 
+            
+            halign: 'left'
+            valign: 'bottom'
