@@ -11,11 +11,11 @@ if __name__ != '__main__':
     Config.set('graphics', 'height', '1140')
     #zmiana
     #wywolanie konfliktu
-    
-#konflikt
+    #delete sth
 
 #conflict
 
 565678
     #test
 
+for fuck's sake
