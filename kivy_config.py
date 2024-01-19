@@ -13,7 +13,7 @@ if __name__ != '__main__':
 # asdfafdaf
     #wywolanie konfliktu
     #konflikt
-
+    #conflict
 
     #test
 
