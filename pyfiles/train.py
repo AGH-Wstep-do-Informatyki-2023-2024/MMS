@@ -7,8 +7,12 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.properties import NumericProperty
+from kivy.uix.behaviors import ButtonBehavior
 
 from pyfiles.windowmanager import manager
+
+import random
 
 storage = JsonStore('trainings.json')
 IMG_PATH = './img/'
@@ -16,18 +20,32 @@ IMG_PATH = './img/'
 nt_first = None
 nt_second = None
 
+train_content = None
+
 ne_window = None
 nt_window = None
 
+config_id = None
 configuration = {}
-exercises = []
+steps = []
 
 class TrainLabel(Widget):
     def __init__(self, id, **kwargs):
         super(TrainLabel, self).__init__(**kwargs)
         self.id = id
         self.name = storage.get(id)['name']
-        self.icon = IMG_PATH + storage.get(id)['icon']
+
+        icon_path = IMG_PATH
+        match storage.get(id)['icon']:
+            case 'barbell':
+                icon_path += 'barbell-white.png'
+            case 'bike':
+                icon_path += 'person-simple-bike-white.png'
+            case 'runner':
+                icon_path += 'person-simple-run-white.png'
+            case _:
+                pass
+        self.icon = icon_path
 
         self.namelabel.text = self.name
         self.iconlabel.source = self.icon
@@ -57,12 +75,8 @@ class BackButton(Button):
             global configuration
             configuration = {}
 
-            global exercises
-            exercises = []
-
-            # print(configuration)
-
-            # print(exercises)
+            global steps
+            steps = []
 
         if self.previous == 'train_new_training_second':
             global ne_window
@@ -72,9 +86,12 @@ class BackButton(Button):
             nt_window.reset()
             
 
-class NewExerciseLabel(BoxLayout):
-    def __init__(self, **kwargs):
-        super(NewExerciseLabel, self).__init__(**kwargs)
+class NewStepLabel(ButtonBehavior, BoxLayout):
+    def __init__(self, index, **kwargs):
+        super(NewStepLabel, self).__init__(**kwargs)
+
+    def on_press(self):
+        pass
 
 class NewExerciseMenu(BoxLayout):
     def __init__(self, **kwargs):
@@ -95,15 +112,43 @@ class AddExercise(Button):
 class NewTimerWindow(Screen):
     def __init__(self, **kwargs):
         super(NewTimerWindow, self).__init__(**kwargs)
+        self.content = None
         self.reset()
 
     def reset(self):
+        if self.content:
+            self.content.clear_widgets()
         self.content = NewTimerContent()
         self.add_widget(self.content)
 
 class NewTimerContent(GridLayout):
     def __init__(self, **kwargs):
         super(NewTimerContent, self).__init__(**kwargs)
+        self.tbb.layout.add_widget(BackButton('train_new_training_second'))
+
+    def add_timer(self):
+        if self.timer.text == '':
+            return
+        
+        try:
+            time = int(self.timer.text)
+        except ValueError:
+            return
+        
+        if time <= 0:
+            return
+        
+        global steps
+        steps.append(('timer', {'time': time}))
+
+        global manager
+        manager.current = 'train_new_training_second'
+
+        global nt_second
+        nt_second.content.reset()
+
+        self.timer.text = ''
+
 
 class NewExerciseWindow(Screen):
     def __init__(self, **kwargs):
@@ -127,12 +172,12 @@ class NewExerciseContent(GridLayout):
         if self.ex_name.text.strip() == '':
             return
         
-        global exercises
+        global steps
         new_ex = {
             'name': self.ex_name.text.strip(),
             'description': self.ex_description.text.strip()
             }
-        exercises.append(new_ex)
+        steps.append(('exercise', new_ex))
         
         global manager
         manager.current = 'train_new_training_second'
@@ -175,25 +220,76 @@ class NewTrainingSecondContent(GridLayout):
         self.num_of_elements += 1
         self.content_layout.height += object.height
 
+    def go_next(self):
+        global config_id
+        global configuration
+        global steps
+        global storage
+
+        if len(steps) == 0:
+            return
+        
+        configuration['steps'] = []
+        for index, step in enumerate(steps):
+            if step[0] == 'exercise':
+                configuration['steps'].append({
+                    'type': 'exercise',
+                    'name': step[1]['name'],
+                    'description': step[1]['description']
+                })
+            elif step[0] == 'timer':
+                configuration['steps'].append({
+                    'type': 'timer',
+                    'time': step[1]['time']
+                })
+
+        storage.put(config_id, 
+                    name=configuration['name'], 
+                    icon=configuration['icon'], 
+                    description=configuration['description'], 
+                    steps=configuration['steps'])
+        
+        global train_content
+        train_content.reset_train_content()
+
+        global manager
+        manager.current = 'train'
+
+        global nt_first
+        global nt_second
+        nt_first.reset_first()
+        nt_second.reset_second()
+            
+        configuration = {}
+        steps = []
+
     def reset(self):
+        global steps
         self.num_of_elements = 0
         self.content_layout.height = self.content_layout.minimum_height
         self.content_layout.clear_widgets()
 
-        global exercises
-
-        print(exercises)
         global manager
-        print(manager.screens)
-        for ex in exercises:
-            new_ex = NewExerciseLabel()
-            new_ex.img.source = IMG_PATH + 'barbell-white.png'
-            new_ex.label.text = ex['name']
-            self.add_object(new_ex)
+        for i, step in enumerate(steps):
+            new_step = NewStepLabel(index=i)
+            if step[0] == 'exercise':
+                ex = step[1]
+                new_step.img.source = IMG_PATH + 'barbell-white.png'
+                new_step.label.text = ex['name']
+            if step[0] == 'timer':
+                timer = step[1]
+                new_step.img.source = IMG_PATH + 'clock-white.png'
+                new_step.label.text = str(timer['time'])
+            self.add_object(new_step)
         
         self.add_object(NewExerciseMenu())
 
-        self.add_object(Label(text=''))
+        last_label = Label(text='')
+        self.add_object(last_label)
+
+        global nt_second
+        if nt_second and nt_second.content.content_layout.height > 800:
+            nt_second.content.scroll.scroll_to(last_label)
 
 
 class NewTrainingFirstContent(GridLayout):
@@ -281,30 +377,38 @@ class NewTrainingFirst(Screen):
         self.content = NewTrainingFirstContent()
         self.add_widget(self.content)
 
-        # global nt_first
-        # global manager
-        # manager.remove_widget(nt_first)
-
-
 
 class NewTrainingSecond(Screen):
     def __init__(self, **kwargs):
         super(NewTrainingSecond, self).__init__(**kwargs)
+        self.content = None
         self.reset_second()
 
     def reset_second(self):
-        self.content = NewTrainingSecondContent()
+        self.clear_widgets()
+
+        global steps
+        steps = []
+
+        if not self.content:
+            self.content = NewTrainingSecondContent()
+        # print(self.content)
+        self.content.reset()
         self.add_widget(self.content)
 
-        self.content.reset()
-
-        # global nt_second
-        # global manager
-        # manager.remove_widget(nt_second)
+        # print('reset')
+        
 
 class DarkTextInput(TextInput):
+    max_length = NumericProperty()
     def __init__(self, **kwargs):
         super(DarkTextInput, self).__init__(**kwargs)
+
+
+    def insert_text(self, substring, from_undo = False):
+        s = substring
+        if len(self.text) <= self.max_length:
+            return super(DarkTextInput, self).insert_text(s, from_undo = from_undo)
 
 
 class TrainWindow(MainWindow):
@@ -326,6 +430,13 @@ class TrainWindow(MainWindow):
 class TrainContent(GridLayout):
     def __init__(self, **kwargs):
         super(TrainContent, self).__init__(**kwargs)
+        self.reset_train_content()
+
+        global train_content
+        train_content = self
+
+    def reset_train_content(self):
+        self.clear_widgets()
         self.height = self.minimum_height + 100
         
         top = TrainTop()
@@ -347,3 +458,13 @@ class TrainTop(BoxLayout):
     def new_training(self):
         global manager
         manager.current = 'train_new_training_first'
+
+        global config_id
+
+        MIN = 1
+        MAX = 1000000
+        id = random.randint(MIN, MAX)
+        while str(id) in storage.keys():
+            id = random.randint(MIN, MAX)
+
+        config_id = str(id)

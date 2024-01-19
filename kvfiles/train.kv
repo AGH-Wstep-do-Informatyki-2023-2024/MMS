@@ -139,6 +139,8 @@
             id: name
             size_hint: 1, 0.95
             hint_text: 'nazwa'
+            multiline: False
+            max_length: 12
         Separator:
             size_hint: 1, 0.05
 
@@ -146,6 +148,7 @@
         id: description
         size_hint: 1, 0.4
         hint_text: 'opis'
+        max_length: 140
 
     BoxLayout:
         orientation: 'vertical'
@@ -194,7 +197,7 @@
                     size: self.size
                     radius: [10,]
 
-<NewExerciseLabel@BoxLayout>:
+<NewStepLabel@BoxLayout>:
     img: img
     label: label
 
@@ -221,6 +224,14 @@
         size_hint: 0.7, 1
 
 <NewExerciseWindow>:
+    canvas.before:
+        Color:
+            rgba: hex('#19191C')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<NewTimerWindow>:
     canvas.before:
         Color:
             rgba: hex('#19191C')
@@ -256,6 +267,8 @@
             id: ex_name
             size_hint: 1, 0.95
             hint_text: 'nazwa ćwiczenia'
+            multiline: False
+            max_length: 10
         Separator:
             size_hint: 1, 0.05
 
@@ -263,6 +276,8 @@
         id: ex_description
         size_hint: 1, 0.4
         hint_text: 'opis ćwiczenia'
+        # focus: True
+        max_length: 140
     AnchorLayout:
         id: layout_next
         pos: self.pos
@@ -279,6 +294,71 @@
             background_normal: './img/check-white.png'
             background_down: './img/check-white.png'
             on_release: root.add_exercise()
+            canvas.before:
+                Color:
+                    rgb: hex('#1E1E1E')
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10,]
+
+<NewTimerContent@GridLayout>:
+    tbb: tbb
+    timer: timer
+
+    cols: 1
+    size: root.size
+    pos: root.pos
+    spacing: 30
+    padding: 20
+
+    TopBackButton:
+        id: tbb
+        size_hint: 1, 0.08
+    
+    Label:
+        text: 'NOWY TIMER'
+        font_size: '60sp'
+        size_hint: 1, 0.13
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'top'
+        size_hint: 1, 0.7
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 0.9, 0.4
+            DarkTextInput:
+                id: timer
+                hint_text: ''
+                font_size: '80sp'
+                multiline: False
+                max_length: 4
+                # focus: True
+                # padding_x: 80
+                halign: 'center'
+                padding_y: [self.height / 2.0 - (self.line_height / 2.0) * len(self._lines), 0]
+            Label:
+                text: 'sekund'
+                font_size: '55sp'
+                color: hex('#777777')
+
+    AnchorLayout:
+        id: layout_next
+        pos: self.pos
+        size: self.size
+        size_hint: 1, 0.08
+        anchor_x: 'right'
+        anchor_y: 'center'
+        padding: 8
+        Button:
+            size: 20, 20
+            size_hint: 0.18, 1
+            pos: self.pos
+            background_color: 1, 1, 1, 1
+            background_normal: './img/check-white.png'
+            background_down: './img/check-white.png'
+            on_release: root.add_timer()
             canvas.before:
                 Color:
                     rgb: hex('#1E1E1E')
@@ -327,6 +407,7 @@
     tbb: tbb
     content_layout: content_layout
     name_label: name_label
+    scroll: scroll
 
     cols: 1
     size: root.size
@@ -347,6 +428,7 @@
             font_size: '60sp'
         Separator:
     ScrollView:
+        id: scroll
         do_scroll_y: True
         do_scroll_x: False
         bar_color: 0, 0, 0, 0
@@ -374,6 +456,7 @@
             background_color: 1, 1, 1, 1
             background_normal: './img/check-white.png'
             background_down: './img/check-white.png'
+            on_release: root.go_next()
             canvas.before:
                 Color:
                     rgb: hex('#1E1E1E')
