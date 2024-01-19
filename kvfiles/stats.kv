@@ -1,55 +1,79 @@
 #:kivy 2.2.1
 
-<ExerciseSelector>
+<ExerciseSelector>:
     cols: 1
+    spacing: 10
+    padding: 10
 
     Label:
-        text: "One Rep MAX calculator"
+        text: "[b]One Rep MAX calculator[/b]"
         text_size: self.size
+        markup: True
         font_size: '30sp'
         halign: 'center'
-        valign: 'top'
-        size_hint_y: None
-
-    TextInput:
-        id: weight_input
-        multiline: False
-        size_hint_y: None
-        height: 60
-        width: 200
-        hint_text: "Podniesiony ciężar"
-
-    TextInput:
-        id: reps_input
-        multiline: False
-        size_hint_y: None
-        height: 60
-        width: 200
-        hint_text: "Ilość wykonanych powtórzeń"
-
-    Spinner:
-        id: exercise_spinner
-        text: 'Wybierz ćwiczenie'
-        values: ['Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Pull Ups', 'Dips']
-        size_hint_y: None
-        height: 44
-        size_hint_x: None
-        width: 200
-        pos_hint: {'center_x': 0.5}
-        dropdown_cls: 'DropDown'
-        on_text: root.on_spinner_text(self.text)
-
-    Button:
-        text: "Oblicz ORM"
-        size_hint: None, None
-        height: 25
-        width: 100  
-        on_press: root.onerepmax()
-
-    Label:
-        text: 
-            "Należy jednak pamiętać, że kalkulator podaje tylko przybliżone wartości, dlatego dźwigaj z głową !"
-        halign: 'center'
         valign: 'bottom'
-        text_size: self.size
-        font_size: '20sp'
+        size_hint_y: None
+        height: 60
+        pos_hint: {'center_y': 0.9}
+
+    Widget:
+        size_hint_y: None
+        height: 20
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        size_hint_y: None
+        height: 240
+        pos_hint: {'center_y': 0.6}
+
+        TextInput:
+            id: weight_input
+            multiline: False
+            size_hint: None, None
+            height: 60
+            width: 500
+            hint_text: "Podniesiony ciężar"
+            pos_hint: {'center_x': 0.5}
+
+        TextInput:
+            id: reps_input
+            multiline: False
+            size_hint: None, None
+            height: 60
+            width: 500
+            hint_text: "Ilość wykonanych powtórzeń"
+            pos_hint: {'center_x': 0.5}
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 10
+            size_hint_y: None
+            height: 40
+
+            Widget:
+                size_hint_x: None
+                width: 5
+
+            Spinner:
+                id: exercise_spinner
+                text: 'Wybierz ćwiczenie'
+                values: ['Squat', 'Bench Press', 'Deadlift', 'Overhead Press', 'Pull Ups', 'Dips']
+                size_hint_y: None
+                height: 40
+                size_hint_x: None
+                width: 200
+                pos_hint: {'center_x': 0.5}
+                dropdown_cls: 'DropDown'
+                on_text: root.on_spinner_text(self.text)
+
+            Widget:  
+                size_hint_x: None
+                width: 120
+
+            Button:
+                text: "Oblicz ORM"
+                size_hint: None, None
+                height: 40
+                width: 150
+                on_press: root.onerepmax()
