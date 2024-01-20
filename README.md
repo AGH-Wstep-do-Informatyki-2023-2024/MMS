@@ -40,4 +40,4 @@ Aby dowiedzieć się więcej wejdź na stronę: (https://moc-motywacja-sila.com)
 - Mateusz Okoń
 - Szymon Chmiel
 
-## Losowy text
+![](https://github.com/AGH-Wstep-do-Informatyki-2023-2024/MMS/blob/main/screenshots/combined.png)
