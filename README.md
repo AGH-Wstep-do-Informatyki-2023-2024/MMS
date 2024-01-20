@@ -2,6 +2,8 @@
 
 To nowoczesna aplikacja na siłownie. Nazwa "Moc, Motywacja, Siła" doskonale odzwierciedla naszą filozofię wspierania Twojego osobistego rozwoju fitness, opartego na zrównoważonym treningu, motywacji oraz wewnętrznej sile.
 
+![screens](img/screenshots/combined.png)
+
 ### Wszechstronne Treningi:
 
 MMS umożliwia dostęp do różnorodnych form treningu, dostosowanych do Twoich preferencji i celów. Niezależnie od tego, czy preferujesz trening siłowy, kardio czy stretching - mamy to dla Ciebie.
@@ -40,4 +42,3 @@ Aby dowiedzieć się więcej wejdź na stronę: (https://moc-motywacja-sila.com)
 - Mateusz Okoń
 - Szymon Chmiel
 
-![](https://github.com/AGH-Wstep-do-Informatyki-2023-2024/MMS/blob/main/screenshots/combined.png)
